@@ -1,7 +1,6 @@
 """
 CareSignals Healthcare Patient Outreach Intelligence System
 Streamlit Dashboard — 5 Pages
-Sponsor: Blue Cross Blue Shield of Nebraska (POC)
 """
 
 import streamlit as st
@@ -169,14 +168,14 @@ with st.sidebar:
         st.cache_data.clear()
         st.rerun()
     st.markdown("---")
-    st.markdown("<small style='color:#4b5563'>Sponsored by BCBSNE<br>UNO AI-CCORE POC</small>", unsafe_allow_html=True)
+    st.markdown("<small style='color:#4b5563'>Healthcare Outreach Intelligence<br>UNO AI-CCORE Project</small>", unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE 1 — PATIENT OVERVIEW
 # ══════════════════════════════════════════════════════════════════════════════
 if page == "Patient Overview":
     st.markdown('<div class="section-header">Patient Population Overview</div>', unsafe_allow_html=True)
-    st.markdown("Real-time view of member health risk across the BCBSNE network.")
+    st.markdown("Real-time view of member health risk across the patient network.")
 
     # KPI row
     df_kpi = query("SELECT risk_level, COUNT(*) as n FROM patients GROUP BY risk_level")
@@ -744,7 +743,7 @@ Upcoming appointments: {', '.join(appts['appointment_type'].tolist()) if not app
             # Show a sample message without API
             sample = f"""Dear Member,
 
-We noticed it has been {p['days_since_visit']} days since your last visit. As a valued BCBSNE member managing {p['num_conditions']} health condition(s), staying connected with your care team is important.
+We noticed it has been {p['days_since_visit']} days since your last visit. Managing {p['num_conditions']} health condition(s) means staying connected with your care team is especially important.
 
 Your current medication adherence is {p['medication_adherence_pct']:.0f}%. {"We encourage you to refill your prescriptions soon." if p['medication_adherence_pct'] < 80 else "Keep up the great work with your medications!"}
 
@@ -752,7 +751,7 @@ Your current medication adherence is {p['medication_adherence_pct']:.0f}%. {"We 
 
 Please call your care coordinator or schedule a visit at your convenience.
 
-— BCBSNE Care Team"""
+— Your Care Team"""
             st.markdown(f'<div class="msg-card">{sample}</div>', unsafe_allow_html=True)
         else:
             with st.spinner("Personalization Agent generating message..."):
