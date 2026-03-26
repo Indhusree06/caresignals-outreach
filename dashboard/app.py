@@ -598,13 +598,24 @@ elif page == "Outreach Generator":
     - patients(patient_id, age, gender, city, state, insurance_plan, days_since_visit,
                num_conditions, num_medications, medication_adherence_pct, missed_appointments,
                er_visits_last_year, hospitalizations_last_year, engagement_score,
-               preferred_channel, risk_level, risk_score)
-    - conditions(patient_id, condition, severity, controlled)
+               preferred_channel, risk_level TEXT ['High','Medium','Low'], risk_score)
+    - conditions(patient_id, condition TEXT, severity TEXT, controlled INTEGER 0/1)
+      condition values: 'Type 2 Diabetes','Hypertension','Heart Disease','COPD','Asthma',
+                        'Obesity','Depression','Hyperlipidemia','Chronic Kidney Disease','Osteoarthritis'
     - medications(patient_id, medication_name, condition, adherence_pct, days_until_refill)
-    - appointments(patient_id, appointment_type, scheduled_date, status, days_until_appt)
-    - preventive_care(patient_id, care_type, last_completed, days_overdue, recommended)
-    - outreach_messages(patient_id, message_type, channel, sent_date, opened, clicked, responded)
-    - broadcast_campaigns(campaign_id, campaign_name, target_condition, total_sent, open_rate, response_rate)
+    - appointments(patient_id, appointment_type, scheduled_date, status TEXT, days_until_appt)
+      status values: 'Scheduled','Completed','No-Show','Cancelled','Rescheduled'
+    - preventive_care(patient_id, care_type TEXT, last_completed, days_overdue INTEGER, recommended INTEGER 0/1)
+      care_type values: 'Annual Wellness Visit','Flu Shot','Mammogram','Colonoscopy',
+                        'Blood Pressure Check','HbA1c Test','Cholesterol Panel','Eye Exam',
+                        'Dental Cleaning','Bone Density Scan'
+    - outreach_messages(patient_id, message_type, channel TEXT ['SMS','Email','Push Notification','Phone Call'],
+                        sent_date, opened INTEGER 0/1, clicked INTEGER 0/1, responded INTEGER 0/1)
+    - broadcast_campaigns(campaign_id, campaign_name, target_condition, total_sent, open_rate REAL, response_rate REAL)
+
+    IMPORTANT: All string values are case-sensitive. Always use LIKE for partial matches or exact case shown above.
+    For flu shot queries use: care_type = 'Flu Shot' (capital F and S)
+    For overdue items use: days_overdue > 0
     """
 
     col_left, col_right = st.columns([1.2, 1])
