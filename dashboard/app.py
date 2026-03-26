@@ -543,9 +543,10 @@ elif page == "Analytics":
     with col5:
         st.markdown('<div class="section-header">ER Visits vs Risk Score</div>', unsafe_allow_html=True)
         df_er = query("SELECT er_visits_last_year, risk_score, risk_level, num_conditions FROM patients")
+        df_er['bubble_size'] = df_er['num_conditions'].clip(lower=1)  # ensure no zero sizes
         fig_er = px.scatter(
             df_er, x='er_visits_last_year', y='risk_score',
-            color='risk_level', size='num_conditions',
+            color='risk_level', size='bubble_size',
             color_discrete_map={'High':'#ef4444','Medium':'#f59e0b','Low':'#22c55e'},
             opacity=0.6
         )
