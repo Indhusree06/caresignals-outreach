@@ -152,7 +152,7 @@ with st.sidebar:
     st.markdown("*Healthcare Outreach Intelligence*")
     st.markdown("---")
     st.markdown("**Navigation**")
-    page = st.radio("", [
+    page = st.radio("Navigate to page", [
         "Patient Overview",
         "Patient Detail",
         "Analytics",
